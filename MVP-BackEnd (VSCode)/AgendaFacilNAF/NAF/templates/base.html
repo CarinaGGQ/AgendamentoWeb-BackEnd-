@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NAF</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/global.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Cabeçalho -->
+    <header class="cabeçalho">
+      <a href="{% url 'homepage' %}">
+        <img
+          src="{% static 'images/Unifeso_logo.png' %}"
+          width="150px"
+          alt="Logo da UNIFESO preto"
+        />
+      </a>
+
+      <nav>
+        <ul class="item-cabeçalho">
+          <li class="item-lista-cabeçalho contem-filhos">
+            <a href="#">Sou Colaborador</a>
+            <ul>
+              <li>
+                <a href="{% url 'aluno' %}" class="botao-colaborador"
+                  >Sou aluno do NAF</a
+                >
+              </li>
+              <li>
+                <a href="{% url 'professor' %}" class="botao-colaborador"
+                  >Sou professor do NAF</a
+                >
+              </li>
+              <li>
+                <a href="{% url 'administrador' %}" class="botao-colaborador"
+                  >Sou administrador do NAF</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="item-lista-cabeçalho">
+            <a href="{% url 'feedback' %}">Feedback</a>
+            <a onclick="openModalFeedback()" class="botao-colaborador"></a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    {% block body %} {% endblock %}
+    <footer>
+      <div class="rodape">
+        <img
+          src="{% static 'images/Unifeso_logo_preto.png' %}"
+          width="150px"
+          alt="Logo da UNIFESO"
+        />
+      </div>
+    </footer>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>

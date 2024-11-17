@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<!--Criando página Sou Professor-->
+<div class="professor">
+  <form action="" class="form form-professor">
+    <div class="item-janela-cabeçalho">
+      <label for="name">CPF:</label>
+      <input
+        type="CPF"
+        id="CPF"
+        name="CPF"
+        placeholder="*Digite seu CPF"
+        required
+        autocomplete="CPF"
+      />
+    </div>
+
+    <div class="item-janela-cabeçalho">
+      <label for="name">Senha:</label>
+      <input
+        type="password"
+        id="password-professor"
+        name="password-professor"
+        placeholder="*Digite sua senha"
+        required
+      />
+    </div>
+
+    <div class="botao-enviar">
+      <button type="submit" class="botao">Entrar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

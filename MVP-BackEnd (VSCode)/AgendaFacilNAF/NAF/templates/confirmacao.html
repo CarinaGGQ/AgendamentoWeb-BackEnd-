@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+
+<!--Criando Janela Confirmação de Agendamento-->
+<div id="confirmação-container" class="confirmação-container">
+  <div class="confirmação">
+    <div class="campos-cadastro">
+      <p>
+        Para efetivação do seu agendamento por favor, preencha os campos abaixo.
+      </p>
+    </div>
+
+    <form action="">
+      <div class="item-janela-cabeçalho">
+        <label for="name">Nome:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="*Seu nome completo"
+          required
+          autocomplete="name"
+        />
+      </div>
+
+      <div class="item-janela-cabeçalho">
+        <label for="name">E-mail:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="*Digite seu e-mail"
+          required
+          autocomplete="email"
+        />
+      </div>
+      <div class="item-janela-cabeçalho">
+        <label for="name">Serviço:</label>
+        <input
+          type="text"
+          id="serviço"
+          name="serviço"
+          placeholder="*Digite o serviço que necessita"
+          required
+          autocomplete="serviço"
+        />
+      </div>
+
+      <div class="botao-enviar">
+        <button type="submit" class="botao">Agendar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,382 @@
+/* Cabeçalho */
+
+.cabeçalho {
+  font: 1rem Lato, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  background-color: white;
+  padding: 1rem 12rem;
+  box-shadow: 0 0.21rem 0.4rem rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.contem-filhos ul {
+  display: none;
+  flex-flow: column;
+  gap: 0rem;
+  align-items: stretch;
+  width: max-content;
+  position: absolute;
+  background-color: rgba(22, 22, 22, 0.9);
+  padding: 0.5rem 1.5rem;
+  left: -1.5rem;
+  z-index: 1000;
+  font-size: 1rem;
+  line-height: 2.5rem;
+  border-radius: 6px;
+}
+
+.contem-filhos {
+  position: relative;
+}
+
+.contem-filhos:hover ul {
+  display: flex;
+}
+
+.item-lista-cabeçalho a {
+  color: #989898;
+  font-size: 1.4rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.item-lista-cabeçalho a:hover,
+.item-lista-cabeçalho a:active {
+  color: #f60;
+}
+
+.item-lista-cabeçalho.contem-filhos::after {
+  content: "\2bc6";
+}
+
+/* Janelas do Cabeçalho */
+
+.item-janela-cabeçalho {
+  margin-bottom: 1rem;
+  margin-inline: 0.5rem;
+}
+
+.item-janela-feedback {
+  width: 40rem;
+  text-align: justify;
+}
+
+.text-input {
+  width: 40rem;
+  height: 25rem;
+}
+
+.botao-colaborador {
+  cursor: pointer;
+}
+
+.item-janela-colaborador {
+  text-align: right;
+}
+
+.botao-enviar {
+  padding-top: 1rem;
+  width: 28%;
+  margin-inline: 0.5rem;
+  display: inline-block;
+}
+
+.aluno,
+.professor,
+.administrador,
+.colaborador {
+  width: 44%;
+  height: 42rem;
+  padding: 8rem;
+  border-radius: 10px;
+  text-align: center;
+  align-items: 2rem;
+}
+
+.feedback {
+  width: 44%;
+  padding: 8rem;
+  border-radius: 10px;
+  text-align: center;
+  align-items: 2rem;
+}
+
+.aluno-container.abrir,
+.professor-container.abrir,
+.administrador-container.abrir,
+.colaborador-container.abrir,
+.feedback-container.abrir {
+  display: flex;
+}
+
+.oculto {
+  display: none;
+}
+
+.confirmação-container.abrir {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+@keyframes animate-modal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.abrir .aluno,
+.abrir .professor,
+.abrir .administrador,
+.abrir .colaborador,
+.abrir .feedback,
+.abrir .confirmação {
+  animation: animate-modal 0.3s;
+}
+
+.text-input {
+  background-color: #ffffff;
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.campos-cadastro p {
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding-bottom: 4rem;
+}
+
+/* Seção Apresentação */
+
+.secao-apresentacao {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+.coluna-objetivo {
+  display: flex;
+  flex-flow: column;
+}
+
+.p-apresentacao {
+  font-size: 1.8rem;
+  color: #000000;
+}
+
+/* Seção Agendamento */
+
+.secao-agendamento {
+  padding-bottom: 8rem;
+}
+
+.último-p {
+  padding-bottom: 3rem;
+  padding-top: 0;
+  font-weight: 600;
+}
+
+/*Criação do Calendário*/
+
+.calendario-container {
+  width: 600px;
+  margin: 20px auto; /* Centraliza o calendário horizontalmente */
+  border: 1px solid #ddd; /* Adiciona uma borda sutil */
+  border-radius: 8px; /* Cantos arredondados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  background-color: #fff; /* Fundo branco */
+  padding: 20px; /* Espaçamento interno */
+}
+
+.month {
+  padding: 1rem 0rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between; /* Espaça os ícones e o título */
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #338a68;
+  text-shadow: 0 0.3rem 0.5rem #062b1c;
+  margin-bottom: 10px;
+}
+
+.month i {
+  cursor: pointer; /* Cursor para indicar clicável */
+  font-size: 1.5rem;
+}
+
+.month i:hover {
+  color: #000; /* Cor ao passar o mouse */
+}
+
+.month h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: #37ffb2;
+  line-height: 0%;
+}
+
+.month p {
+  font-size: 1.6rem;
+  color: #ffffff;
+  text-align: center;
+  line-height: 0%;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* Sete colunas para os dias */
+  text-align: center;
+  font-weight: bold;
+  color: #555;
+  border-bottom: 1px solid #ddd; /* Linha de separação */
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* Sete colunas */
+  text-align: center;
+  gap: 5px; /* Espaçamento entre os dias */
+  row-gap: 7px;
+}
+
+.days div {
+  padding: 10px;
+  height: 4rem;
+  border-radius: 4px;
+  font-size: 1.3rem;
+  text-shadow: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.2s;
+  cursor: pointer; /* Cursor para indicar que é clicável */
+}
+
+.prev-date,
+.next-date {
+  opacity: 0.5;
+}
+
+.today {
+  background-color: #338a68;
+  font-weight: bold;
+  cursor: not-allowed;
+}
+
+/* Remove o efeito de hover nos dias passados do mês atual e nos dias do mês anterior */
+.days div.passado:hover,
+.days div.prev-date:hover {
+  background-color: transparent; /* Remove o fundo */
+  border: none; /* Remove a borda */
+  cursor: not-allowed; /* Adiciona um cursor para indicar que está desabilitado */
+}
+
+/* Mantém o efeito hover para dias futuros */
+.days div:hover:not(.today):not(.passado):not(.prev-date) {
+  background-color: #262626;
+  border: 0.2rem solid #777;
+  cursor: pointer;
+}
+
+/*Criação do Horário*/
+
+.horarios-container {
+  width: 100vw;
+  height: 60vh;
+  position: flex;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.horarios p {
+  font-size: 2.4rem;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.confirmação {
+  width: 44%;
+  padding: 8rem;
+  text-align: center;
+}
+
+.horarios {
+  width: 55%;
+  height: 40rem;
+  padding: 0rem 8rem;
+  text-align: center;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.horarios-container.abrir {
+  display: flex;
+}
+
+@keyframes animate-modal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.abrir .horarios {
+  animation: animate-modal 0.3s;
+}
+
+.botao-horario {
+  margin-bottom: 3rem;
+  margin-inline: 1rem;
+}
+
+.botao:hover {
+  border: #136b49;
+  background-color: #136b49;
+  transform: scale(1.13);
+}
+
+/*Footer*/
+footer {
+  width: 100%;
+  height: 15rem;
+  background-color: white;
+  box-shadow: 0 0.21rem 0.4rem rgba(0, 0, 0, 0.856);
+  padding: 2rem 12rem;
+}

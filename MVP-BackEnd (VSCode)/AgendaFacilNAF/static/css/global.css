@@ -1,0 +1,101 @@
+@import url(https://fonts.googleapis.com/css?family=Arapey:400,400i);
+
+/* Global */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: #000000;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  background-color: #f4f5f7;
+}
+
+h1 {
+  font-family: "Arapey", sans-serif;
+  font-size: 7.5rem;
+  line-height: 1;
+  padding: 1.2rem 0;
+  display: block;
+}
+
+h2 {
+  font-size: 2.76rem;
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+h3 {
+  font-family: "Arapey", sans-serif;
+  font-size: 4rem;
+  line-height: 1.2;
+  margin: 0 0 1rem;
+}
+
+p {
+  text-align: justify;
+  font-family: "Lato", sans-serif;
+  font-size: 1.6rem;
+  padding: 2rem 0;
+  color: #757575;
+  line-height: 1.5;
+}
+
+ul {
+  list-style: none;
+}
+
+input {
+  padding: 1.02rem;
+  background-color: white;
+  box-shadow: inset 0 0 0.2rem 0.2rem rgba(0, 0, 0, 0.15);
+  border: 0;
+  border-radius: 0.8rem;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: #404040;
+  width: 30rem;
+}
+
+input:focus {
+  outline: none;
+}
+
+input::placeholder {
+  color: #757575;
+}
+
+.secao {
+  padding: 2rem 10rem;
+}
+
+.botao {
+  display: inline-block;
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 3rem;
+  padding: 0.65rem 2.5rem;
+  color: white;
+  box-shadow: 0 0.21rem 0.8rem rgba(0, 0, 0, 0.15);
+  border: 0.2rem;
+  border-bottom: solid 0.4rem #08412b;
+  border-right: solid 0.4rem #08412b;
+  background-image: linear-gradient(180deg, #136b49, #545a58);
+  cursor: pointer;
+}
+
+.rodape {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
