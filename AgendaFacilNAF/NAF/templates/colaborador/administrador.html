@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<!--Criando página Sou Administrador-->
+<div class="administrador">
+  {% if erro %}
+  <h4>Credenciais inválidas, tente novamente ou crie uma conta</h4>
+  {% endif %}
+
+  <form
+    method="post"
+    action="{% url 'gerenciar' %}"
+    class="form form-administrador"
+  >
+    {% csrf_token %}
+
+    <div class="item-janela-cabeçalho">
+      <label for="name">Usuário:</label>
+      <input
+        type="username"
+        id="username_adm"
+        name="username"
+        placeholder="*Digite seu nome de usuário"
+        required
+        autocomplete="username"
+      />
+    </div>
+
+    <div class="item-janela-cabeçalho">
+      <label for="name">Senha:</label>
+      <input
+        type="password"
+        id="password-administrador"
+        name="password"
+        placeholder="*Digite sua senha"
+        required
+        required
+      />
+    </div>
+
+    <div class="botao-enviar">
+      <button type="submit" class="botao">Entrar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<!--Criando página fazer_login-->
+<div class="colaborador">
+  {% if erro %}
+  <h4>Credenciais inválidas, tente novamente.</h4>
+  {% endif %}
+
+  <form method="post" action="{% url 'fazer_login' %}" class="form">
+    {% csrf_token %}
+
+    <div class="item-janela-cabeçalho">
+      <label for="name">Usuário:</label>
+      <input
+        type="username"
+        name="username"
+        placeholder="*Digite seu nome de usuário"
+        required
+        autocomplete="username"
+      />
+    </div>
+
+    <div class="item-janela-cabeçalho">
+      <label for="name">Senha:</label>
+      <input
+        type="password"
+        name="password"
+        placeholder="*Digite sua senha"
+        required
+      />
+    </div>
+
+    <div class="botao-enviar">
+      <button type="submit" class="botao">Entrar</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

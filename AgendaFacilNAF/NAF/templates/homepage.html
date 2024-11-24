@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<!-- Seção apresentação -->
+<section class="secao secao-apresentacao">
+  <img
+    class="imagem-apresentacao"
+    src="{% static 'images/Contabilidade.jpg' %}"
+    alt="Imagem de Contabilidade"
+    height="270px"
+  />
+
+  <div class="coluna-objetivo">
+    <h1>Auxílio para calcular seus impostos</h1>
+    <p class="p-apresentacao">
+      Nosso objetivo é prestar atendimento contábil e fiscal à comunidade local,
+      como o auxílio à declaração do Imposto de Renda, enquanto prepara os
+      estudantes de Administração, Ciências Contábeis e Direito para o exercício
+      de suas carreiras, sempre com a orientação de excelentes professores.
+    </p>
+  </div>
+</section>
+
+<!--Seção Quem Somos-->
+<section class="secao secao-QuemSomos">
+  <h3>Quem Somos</h3>
+  <p>
+    O Núcleo de Apoio Contábil e Fiscal – NAF é uma parceria com instituições de
+    ensino superior, e no caso do Unifeso, envolve cursos de Administração,
+    Ciências Contábeis e Direito. A agência da Receita Federal de Teresópolis
+    encaminha as pessoas aos serviços do NAF, que são altamente demandados,
+    especialmente durante a temporada de declaração do Imposto de Renda. O NAF
+    proporciona a capacitação e o treinamento dos estudantes, fornecendo-lhes
+    conhecimentos de ordem técnica e ética, visando transmitir a vivência
+    contábil e fiscal dentro da realidade social.<br />
+  </p>
+</section>
+
+<!--Seção Agendamento-->
+<section class="secao secao-agendamento">
+  <h3>Agendamento</h3>
+  <p>
+    O atendimento ao público é realizado no edifício (colocar o nome do edifício
+    e sala) no Campus Antonio Paulo Capanema de Souza da UNIFESO.
+  </p>
+  <p class="último-p">
+    Lembre-se de levar a documentação adequada para o serviço desejado.
+  </p>
+  <!--Botão Agendamento-->
+
+  <a href="{% url 'agendamento' %}" class="botao">Clique aqui para agendar</a>
+</section>
+{% endblock %}
