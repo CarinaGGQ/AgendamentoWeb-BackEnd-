@@ -28,24 +28,6 @@ def confirmacao(request):
   return render(request, 'confirmacao.html')
 
 
-# def fazer_login(request):
-#   erro = False
-#   if request.method == "POST":
-#     if request.user.groups.filter(name="professores").exists():
-#       return render(request, 'colaborador/gerenciar.html')
-#     else:
-#       erro = True
-#     if request.user.groups.filter(name="alunos").exists():
-#       return render(request, 'colaborador/gerenciar.html')
-#     else:
-#       erro = True
-#     if request.user.groups.filter(name="administradores").exists():
-#       return render(request, 'colaborador/gerenciar.html')
-#     else:
-#       erro = True
-#   context = {"erro": erro}
-#   return render(request, 'colaborador/fazer_login.html', context)
-
 def fazer_login(request):
   erro = False
   
@@ -65,30 +47,34 @@ def fazer_login(request):
   context = {"erro": erro}
   return render(request, 'colaborador/fazer_login.html', context)
 
-  #   dados = request.POST.dict()
-  #   if "username" in dados and "password" in dados:
-  #     username = dados.get("username")
-  #     password = dados.get("password")
-  #     usuario = authenticate(request, username=username, password=password)
-  #     if usuario:
-  #       login(request, usuario)
-  #       return render(request, 'colaborador/gerenciar.html')
-  #     else:
-  #       erro = True
-  #   else:
-  #     erro = True
-  # context = {"erro": erro}
+def gerenciar(request):
+  return render(request, 'gerenciar.html')
 
 @login_required
-def gerenciar(request):
+def gerenciar_professor(request):
   erro = False
   if request.user.groups.filter(name="professores").exists():
     return render(request, 'colaborador/gerenciar.html')
+  erro = True
+  context = {"erro": erro}
+  return render(request, 'colaborador/professor.html', context)
+
+@login_required
+def gerenciar_aluno(request):
+  erro = False
   if request.user.groups.filter(name="alunos").exists():
     return render(request, 'colaborador/gerenciar.html')
+  erro = True
+  context = {"erro": erro}
+  return render(request, 'colaborador/aluno.html', context)
+
+@login_required
+def gerenciar_administrador(request):
+  erro = False
   if request.user.groups.filter(name="administradores").exists():
     return render(request, 'colaborador/gerenciar.html')
-  else:
-    erro = True
-    context = {"erro": erro}
-    return render(request, 'colaborador/fazer_login.html', context)
+  erro = True
+  context = {"erro": erro}
+  return render(request, 'colaborador/administrador.html', context)
+
+

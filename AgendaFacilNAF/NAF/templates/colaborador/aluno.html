@@ -5,7 +5,11 @@
   <h4>Credenciais inválidas, tente novamente ou crie uma conta</h4>
   {% endif %}
 
-  <form method="post" action="{% url 'gerenciar' %}" class="form form-aluno">
+  <form
+    method="post"
+    action="{% url 'gerenciar_aluno' %}"
+    class="form form-aluno"
+  >
     {% csrf_token %}
 
     <div class="item-janela-cabeçalho">
