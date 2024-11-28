@@ -34,9 +34,9 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 
 ---
 
-## ✅ Objetivos Específicos / Requisitos
+## Objetivos Específicos / Requisitos
 
-### 🛠️ **Requisitos Funcionais** (em ordem decrescente de prioridade):
+### **Requisitos Funcionais** (em ordem decrescente de prioridade)
 
 - **[RF01]**: O sistema deve apresentar horários disponíveis e permitir o agendamento presencial dos serviços do NAF.
 - **[RF02]**: Administradores do NAF devem configurar a disponibilidade de atendimentos e horários de funcionamento.
@@ -47,7 +47,7 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
   - **[RF05.2]**: Notificação automática por e-mail com link para avaliação, enviada 2 horas após o atendimento.
 - **[RF06]**: Notificações automáticas por e-mail para confirmar e lembrar os usuários sobre os agendamentos.
 
-### 🛠️ **Requisitos Não-Funcionais** (em ordem decrescente de prioridade):
+### **Requisitos Não-Funcionais** (em ordem decrescente de prioridade)
 
 - **[RNF01]**: Conformidade com a **RGPD** (Regulamento Geral de Proteção de Dados).
 - **[RNF02]**: Garantir a segurança e privacidade das informações dos usuários.
