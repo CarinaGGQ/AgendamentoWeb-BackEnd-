@@ -1,18 +1,18 @@
-# Projeto MVP Back-End - Agenda Fácil NAF
+# 🖥️ Projeto MVP Back-End - Agendamento para o NAF
 
-## Sobre o Projeto
+## 📖 Sobre o Projeto
 
 Este é um **MVP (Minimum Viable Product)** de Back-End, desenvolvido para integrar o Front-End (HTML, CSS e JavaScript) com uma estrutura robusta no Back-End utilizando **Python** e o framework **Django**. O objetivo principal é criar uma solução digital que permita o agendamento eficiente e conveniente de atendimentos no **Núcleo de Apoio Fiscal e Contábil (NAF)**.
 
-### O Desafio
+### 🎯 O Desafio
 
 O desafio consiste em desenvolver um website que simplifique o processo de agendamento para os cidadãos que necessitam de assistência com suas declarações de **Imposto de Renda** e outros serviços oferecidos pelo NAF.
 
-### Planejamento
+### 🗓️ Planejamento
 
 O planejamento foi realizado utilizando uma planilha no Excel baseada na metodologia **Kanban**, detalhando as funcionalidades e requisitos a serem implementados semanalmente.
 
-### Ferramentas Utilizadas
+### 🛠️ Ferramentas Utilizadas
 
 - **Framework**: Django (Python)
 - **Editor de Código**: Visual Studio Code
@@ -20,7 +20,7 @@ O planejamento foi realizado utilizando uma planilha no Excel baseada na metodol
 
 ---
 
-## Atores Envolvidos
+## 👥 Atores Envolvidos
 
 - **Estudantes e Professores da Unifeso**: Responsáveis pelos atendimentos no NAF. Os estudantes atuarão sob supervisão de professores.
 - **População Local e Regiões Próximas**: Cidadãos que buscam assistência fiscal e contábil. Eles poderão acessar o site, visualizar horários disponíveis e agendar atendimentos.
@@ -28,15 +28,15 @@ O planejamento foi realizado utilizando uma planilha no Excel baseada na metodol
 
 ---
 
-## Objetivo Geral
+## 🛡️ Objetivo Geral
 
 Desenvolver uma ferramenta digital para que a população local e de regiões próximas possa agendar serviços do NAF, com foco principal na declaração do **Imposto de Renda**.
 
 ---
 
-## Objetivos Específicos / Requisitos
+## ✅ Objetivos Específicos / Requisitos
 
-### **Requisitos Funcionais** (em ordem decrescente de prioridade)
+### 🛠️ **Requisitos Funcionais** (em ordem decrescente de prioridade):
 - **[RF01]**: O sistema deve apresentar horários disponíveis e permitir o agendamento presencial dos serviços do NAF.
 - **[RF02]**: Administradores do NAF devem configurar a disponibilidade de atendimentos e horários de funcionamento.
 - **[RF03]**: Professores e estudantes devem visualizar e acessar dados relevantes dos serviços prestados.
@@ -46,7 +46,7 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
   - **[RF05.2]**: Notificação automática por e-mail com link para avaliação, enviada 2 horas após o atendimento.
 - **[RF06]**: Notificações automáticas por e-mail para confirmar e lembrar os usuários sobre os agendamentos.
 
-### **Requisitos Não-Funcionais** (em ordem decrescente de prioridade)
+### 🛠️ **Requisitos Não-Funcionais** (em ordem decrescente de prioridade):
 - **[RNF01]**: Conformidade com a **RGPD** (Regulamento Geral de Proteção de Dados).
 - **[RNF02]**: Garantir a segurança e privacidade das informações dos usuários.
 - **[RNF03]**: Alta disponibilidade do sistema (24/7), com manutenções programadas e rápidas.
@@ -56,14 +56,14 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 
 ---
 
-## Tecnologias Utilizadas
+## 💻 Tecnologias Utilizadas
 
 - **HTML, CSS e JavaScript** (Front-End)
 - **Python e Django** (Back-End)
 
 ---
 
-## Instruções para Executar o MVP
+## 🚀 Instruções para Executar o MVP
 
 > **Nota:** O layout mobile ainda está em ajuste para melhor adequação. O acesso está otimizado para computadores.
 
@@ -72,10 +72,9 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 
 ---
 
-## Conclusão
+## 🏁 Conclusão
 
 Como um **MVP Back-End**, este projeto representa um produto mínimo viável. Muitas funcionalidades podem ser incrementadas para transformar o sistema em uma solução completa para uso real. Com base na viabilidade e no interesse do público-alvo, espera-se refinar e expandir o projeto futuramente.
-
 
 
 
