@@ -37,6 +37,7 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 ## ✅ Objetivos Específicos / Requisitos
 
 ### 🛠️ **Requisitos Funcionais** (em ordem decrescente de prioridade):
+
 - **[RF01]**: O sistema deve apresentar horários disponíveis e permitir o agendamento presencial dos serviços do NAF.
 - **[RF02]**: Administradores do NAF devem configurar a disponibilidade de atendimentos e horários de funcionamento.
 - **[RF03]**: Professores e estudantes devem visualizar e acessar dados relevantes dos serviços prestados.
@@ -47,6 +48,7 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 - **[RF06]**: Notificações automáticas por e-mail para confirmar e lembrar os usuários sobre os agendamentos.
 
 ### 🛠️ **Requisitos Não-Funcionais** (em ordem decrescente de prioridade):
+
 - **[RNF01]**: Conformidade com a **RGPD** (Regulamento Geral de Proteção de Dados).
 - **[RNF02]**: Garantir a segurança e privacidade das informações dos usuários.
 - **[RNF03]**: Alta disponibilidade do sistema (24/7), com manutenções programadas e rápidas.
@@ -67,15 +69,20 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 
 > **Nota:** O layout mobile ainda está em ajuste para melhor adequação. O acesso está otimizado para computadores.
 
-1. Acesse o MVP pelo link:
-   [Clique aqui para acessar o MVP](https://6568ce9cc0ce270ae4ee7f51--radiant-muffin-1fa1d8.netlify.app/)
+1. Para executar a página localmente se deve copiar todos os códigos e usá-los no editor de códigos de sua preferência;
+
+2. Deve-se instalar o Django (pip install Django);
+
+3. Criar um superuser;
+
+4. Adicionar nos grupos do Django admin: Alunos, Professores e Administradores;
+
+5. Criar usuários para estes grupos;
+
+6. Criar os serviços.
 
 ---
 
 ## 🏁 Conclusão
 
 Como um **MVP Back-End**, este projeto representa um produto mínimo viável. Muitas funcionalidades podem ser incrementadas para transformar o sistema em uma solução completa para uso real. Com base na viabilidade e no interesse do público-alvo, espera-se refinar e expandir o projeto futuramente.
-
-
-
-
