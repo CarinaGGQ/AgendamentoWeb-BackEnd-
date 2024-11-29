@@ -2,12 +2,12 @@
 <!--Criando página Sou Administrador-->
 <div class="administrador">
   {% if erro %}
-  <h4>Credenciais inválidas, tente novamente ou crie uma conta</h4>
+  <h4>{{mensagem}}</h4>
   {% endif %}
 
   <form
     method="post"
-    action="{% url 'gerenciar_administrador' %}"
+    action="{% url 'administrador' %}"
     class="form form-administrador"
   >
     {% csrf_token %}

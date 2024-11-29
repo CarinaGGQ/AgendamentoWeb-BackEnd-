@@ -1,22 +1,10 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from .models import *
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.core.validators import validate_email
+from django.contrib.auth.models import Group
 
-# Create your views here.
 def homepage(request):
   return render(request, 'homepage.html')
-
-def aluno(request):
-  return render(request, 'colaborador/aluno.html')
-
-def professor(request):
-  return render(request, 'colaborador/professor.html')
-
-def administrador(request):
-  return render(request, 'colaborador/administrador.html')
 
 def feedback(request):
   return render(request, 'feedback.html')
@@ -27,54 +15,106 @@ def agendamento(request):
 def confirmacao(request):
   return render(request, 'confirmacao.html')
 
-
-def fazer_login(request):
+def aluno(request):
   erro = False
-  
+  mensagem = ""
+
   if request.method == "POST":
-    dados = request.POST.dict()
-    if "username" in dados and "password" in dados:
-      username = dados.get("username")
-      password = dados.get("password")
-      usuario = authenticate(request, username=username, password=password)
-      if usuario:
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    usuario = authenticate(request, username=username, password=password)
+
+    if usuario:
+      # Verifica se o usuário pertence ao grupo "Alunos"
+      if usuario.groups.filter(name="Alunos").exists():
         login(request, usuario)
-        return render(request, 'colaborador/gerenciar.html')
+        return redirect('gerenciar_aluno')  # Redireciona para a página gerenciada pelo grupo
       else:
+        mensagem = "Você não tem permissão para acessar como Aluno."
         erro = True
     else:
+      mensagem = "Credenciais inválidas. Verifique o nome de usuário e senha."
       erro = True
-  context = {"erro": erro}
-  return render(request, 'colaborador/fazer_login.html', context)
 
-def gerenciar(request):
-  return render(request, 'gerenciar.html')
+  return render(request, 'colaborador/aluno.html', {"erro": erro, "mensagem": mensagem})
 
-@login_required
-def gerenciar_professor(request):
+
+def professor(request):
   erro = False
-  if request.user.groups.filter(name="professores").exists():
-    return render(request, 'colaborador/gerenciar.html')
-  erro = True
-  context = {"erro": erro}
-  return render(request, 'colaborador/professor.html', context)
+  mensagem = ""
+
+  if request.method == "POST":
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    usuario = authenticate(request, username=username, password=password)
+
+    if usuario:
+      # Verifica se o usuário pertence ao grupo "Professores"
+      if usuario.groups.filter(name="Professores").exists():
+        login(request, usuario)
+        return redirect('gerenciar_professor')  # Redireciona para a página gerenciada pelo grupo
+      else:
+        mensagem = "Você não tem permissão para acessar como Professor."
+        erro = True
+    else:
+      mensagem = "Credenciais inválidas. Verifique o nome de usuário e senha."
+      erro = True
+
+  return render(request, 'colaborador/professor.html', {"erro": erro, "mensagem": mensagem})
+
+
+def administrador(request):
+  erro = False
+  mensagem = ""
+
+  if request.method == "POST":
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    usuario = authenticate(request, username=username, password=password)
+
+    if usuario:
+      # Verifica se o usuário pertence ao grupo "Administradores"
+      if usuario.groups.filter(name="Administradores").exists():
+        login(request, usuario)
+        return redirect('gerenciar_administrador')  # Redireciona para a página gerenciada pelo grupo
+      else:
+        mensagem = "Você não tem permissão para acessar como Administrador."
+        erro = True
+    else:
+      mensagem = "Credenciais inválidas. Verifique o nome de usuário e senha."
+      erro = True
+
+  return render(request, 'colaborador/administrador.html', {"erro": erro, "mensagem": mensagem})
+
 
 @login_required
 def gerenciar_aluno(request):
   erro = False
-  if request.user.groups.filter(name="alunos").exists():
-    return render(request, 'colaborador/gerenciar.html')
-  erro = True
+  if request.user.groups.filter(name="Alunos").exists():
+    return render(request, 'colaborador/gerenciar_aluno.html')
+  else:
+    erro = True
   context = {"erro": erro}
   return render(request, 'colaborador/aluno.html', context)
+
+
+@login_required
+def gerenciar_professor(request):
+  erro = False
+  if request.user.groups.filter(name="Professores").exists():
+    return render(request, 'colaborador/gerenciar_professor.html')
+  else:
+    erro = True
+  context = {"erro": erro}
+  return render(request, 'colaborador/professor.html', context)
+
 
 @login_required
 def gerenciar_administrador(request):
   erro = False
-  if request.user.groups.filter(name="administradores").exists():
-    return render(request, 'colaborador/gerenciar.html')
-  erro = True
+  if request.user.groups.filter(name="Administradores").exists():
+    return render(request, 'colaborador/gerenciar_administrador.html')
+  else:
+    erro = True
   context = {"erro": erro}
   return render(request, 'colaborador/administrador.html', context)
-
-

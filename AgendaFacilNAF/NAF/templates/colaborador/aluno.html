@@ -2,14 +2,10 @@
 <!--Criando página Sou Aluno-->
 <div class="aluno">
   {% if erro %}
-  <h4>Credenciais inválidas, tente novamente ou crie uma conta</h4>
+  <h4>{{mensagem}}</h4>
   {% endif %}
 
-  <form
-    method="post"
-    action="{% url 'gerenciar_aluno' %}"
-    class="form form-aluno"
-  >
+  <form method="post" action="{% url 'aluno' %}" class="form form-aluno">
     {% csrf_token %}
 
     <div class="item-janela-cabeçalho">
