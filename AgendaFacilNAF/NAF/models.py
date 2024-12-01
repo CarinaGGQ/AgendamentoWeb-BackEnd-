@@ -9,7 +9,7 @@ class Cliente(models.Model):
 
     def __str__(self):
         return str(self.email)
-
+    
 class Serviço(models.Model):
     nome = models.CharField(max_length=200, null=False, blank=False)
     ativo = models.BooleanField(default=True)
@@ -29,6 +29,8 @@ LISTA_HORARIOS = (
     ("17h", "17h às 18h"),
 )
 
+
+
 class AgendamentoDisponivel(models.Model):
     dia = models.DateField(null=False, blank=False)
     hora = models.CharField(max_length=5, choices=LISTA_HORARIOS)
@@ -40,10 +42,10 @@ class Feedback(models.Model):
     cliente = models.ForeignKey(Cliente, null=False, blank=False, on_delete=models.CASCADE)
     serviço = models.ForeignKey(Serviço, null=False, blank=False, on_delete=models.CASCADE)
 
+
 class Agendamento(models.Model):
     cliente = models.ForeignKey(Cliente, null=False, blank=False, on_delete=models.CASCADE)
     serviço = models.ForeignKey(Serviço, null=False, blank=False, on_delete=models.CASCADE)
-    Feedback = models.ForeignKey(Feedback, null=False, blank=False, on_delete=models.CASCADE)
     finalizado = models.BooleanField(default=False)
     codigo_transacao = models.CharField(max_length=200, null=True, blank=True)
     AgendamentoDisponivel = models.ForeignKey(AgendamentoDisponivel, null=False, blank=False, on_delete=models.CASCADE)

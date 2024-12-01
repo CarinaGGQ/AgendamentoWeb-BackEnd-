@@ -96,3 +96,36 @@ document.querySelector(".next").addEventListener("click", () => {
 
 // Inicializa o calendário
 renderCalendar();
+
+// Valida o serviço selecionado antes de submeter o formulário
+const validateForm = () => {
+  const servico = document.querySelector('select[name="servico"]').value;
+
+  if (!servico) {
+    alert("Por favor, selecione um serviço antes de confirmar.");
+    return false; // Impede o envio do formulário
+  }
+
+  return true;
+};
+
+// Converte data do formato DD/MM/YYYY para YYYY-MM-DD
+const formatDateToISO = (date) => {
+  const [day, month, year] = date.split("/");
+  return `${year}-${month}-${day}`;
+};
+
+// Modifica o formulário na página de confirmação para corrigir o formato antes de submeter
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", (event) => {
+    const selectedDateInput = document.querySelector(
+      'input[name="selected_date"]'
+    );
+    if (selectedDateInput) {
+      const formattedDate = formatDateToISO(selectedDateInput.value);
+      selectedDateInput.value = formattedDate; // Atualiza o valor antes do envio
+    }
+  });
+});

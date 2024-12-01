@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<div class="confirmação-container confirmação">
+  <h2 class="espaço-maior-bottom">Agendamento Confirmado!</h2>
+  <p>Data: {{data}} (ano-mês-dia)</p>
+  <p>Horário: {{hora}}</p>
+  <p class="espaço-maior-bottom">Serviço: {{servico}}</p>
+  <a class="botao botao-enviar" href="{% url 'homepage' %}">Voltar ao início</a>
+</div>
+{% endblock %}

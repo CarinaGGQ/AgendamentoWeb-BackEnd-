@@ -84,7 +84,6 @@ nav ul {
 
 .botao-enviar {
   padding-top: 1rem;
-  width: 28%;
   margin-inline: 0.5rem;
   display: inline-block;
 }
@@ -329,6 +328,7 @@ nav ul {
 }
 
 .confirmação {
+  padding-top: 4rem;
   padding-left: 8rem;
   padding-bottom: 5rem;
 }
@@ -374,6 +374,10 @@ nav ul {
   border: #136b49;
   background-color: #136b49;
   transform: scale(1.13);
+}
+
+.espaço-maior-bottom {
+  padding-bottom: 3.5rem;
 }
 
 /*Footer*/

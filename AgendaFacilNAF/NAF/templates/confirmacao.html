@@ -14,8 +14,11 @@
       </p>
     </div>
 
-    <form method="post" action="">
+    <form method="post">
       {% csrf_token %}
+      <input type="hidden" name="selected_date" value="{{ selected_date }}" />
+      <input type="hidden" name="selected_time" value="{{ selected_time }}" />
+
       <div class="item-janela-cabeçalho">
         <label for="name">Nome:</label>
         <input
@@ -24,35 +27,35 @@
           name="name"
           placeholder="*Seu nome completo"
           required
-          autocomplete="name"
         />
       </div>
 
       <div class="item-janela-cabeçalho">
-        <label for="name">E-mail:</label>
+        <label for="email">E-mail:</label>
         <input
           type="email"
           id="email"
           name="email"
           placeholder="*Digite seu e-mail"
           required
-          autocomplete="email"
-        />
-      </div>
-      <div class="item-janela-cabeçalho">
-        <label for="name">Serviço:</label>
-        <input
-          type="text"
-          id="serviço"
-          name="serviço"
-          placeholder="*Digite o serviço que necessita"
-          required
-          autocomplete="serviço"
         />
       </div>
 
+      <div class="item-janela-cabeçalho">
+        <label for="servico">Escolha um serviço:</label>
+        <select name="servico" id="servico" required>
+          <option value="">Selecione um serviço</option>
+          {% for servico in servicos %}
+          <option value="{{ servico.id }}">{{ servico.nome }}</option>
+          {% endfor %}
+        </select>
+        {% if not servicos %}
+        <p>Nenhum serviço encontrado!</p>
+        {% endif %}
+      </div>
+
       <div class="botao-enviar botao-confirmacao">
-        <button type="submit" class="botao">Agendar</button>
+        <button type="submit" class="botao">Confirmar</button>
       </div>
     </form>
   </div>
