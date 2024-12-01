@@ -165,7 +165,8 @@ nav ul {
 .campos-cadastro p {
   font-size: 1.8rem;
   font-weight: 600;
-  padding-bottom: 4rem;
+  padding-top: 0;
+  padding-bottom: 1rem;
 }
 
 /* Seção Apresentação */
@@ -328,13 +329,16 @@ nav ul {
 }
 
 .confirmação {
-  width: 44%;
-  padding: 8rem;
-  text-align: center;
+  padding-left: 8rem;
+  padding-bottom: 5rem;
+}
+
+.botao-confirmacao {
+  padding-left: 6rem;
 }
 
 .horarios {
-  width: 55%;
+  width: 60%;
   height: 40rem;
   padding: 0rem 8rem;
   text-align: center;

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
 
 def homepage(request):
   return render(request, 'homepage.html')
@@ -10,10 +9,27 @@ def feedback(request):
   return render(request, 'feedback.html')
 
 def agendamento(request):
-  return render(request, 'agendamento.html')
+    if request.method == 'POST':
+      selected_date = request.POST.get('selected_date', '')
+      selected_time = request.POST.get('selected_time', '')
+
+      # Renderiza a página de confirmação com os dados selecionados
+      return render(request, 'confirmacao.html', {
+        'selected_date': selected_date,
+        'selected_time': selected_time
+      })
+
+    return render(request, 'agendamento.html')
 
 def confirmacao(request):
-  return render(request, 'confirmacao.html')
+    # Os valores serão passados pela requisição POST
+    selected_date = request.POST.get('selected_date', '')
+    selected_time = request.POST.get('selected_time', '')
+
+    return render(request, 'confirmacao.html', {
+        'selected_date': selected_date,
+        'selected_time': selected_time
+    })
 
 def aluno(request):
   erro = False

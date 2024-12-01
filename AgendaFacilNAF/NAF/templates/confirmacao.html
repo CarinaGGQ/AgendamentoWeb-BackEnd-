@@ -3,13 +3,19 @@
 <!--Criando Janela Confirmação de Agendamento-->
 <div id="confirmação-container" class="confirmação-container">
   <div class="confirmação">
+    <p>
+      Agendamento Selecionado: <br />
+      Data: {{selected_date}} <br />
+      Horário: {{selected_time}}
+    </p>
     <div class="campos-cadastro">
       <p>
         Para efetivação do seu agendamento por favor, preencha os campos abaixo.
       </p>
     </div>
 
-    <form action="">
+    <form method="post" action="">
+      {% csrf_token %}
       <div class="item-janela-cabeçalho">
         <label for="name">Nome:</label>
         <input
@@ -45,7 +51,7 @@
         />
       </div>
 
-      <div class="botao-enviar">
+      <div class="botao-enviar botao-confirmacao">
         <button type="submit" class="botao">Agendar</button>
       </div>
     </form>

@@ -1,44 +1,115 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
 
-<!-- Calendário -->
-<div id="calendario-container" class="calendario-container">
-  <div class="calendario">
-    <div class="month">
-      <i class="fas fa-angle-left prev"></i>
-      <div class="date">
-        <h1></h1>
-        <p></p>
+<form id="agendamento-form" method="post" action="{% url 'agendamento' %}">
+  {% csrf_token %}
+
+  <!-- Campo oculto para a data -->
+  <input type="hidden" id="selected-date" name="selected_date" />
+  <!-- Campo oculto para o horário -->
+  <input type="hidden" id="selected-time" name="selected_time" />
+
+  <!-- Calendário -->
+  <div id="calendario-container" class="calendario-container">
+    <div class="calendario">
+      <div class="month">
+        <i class="fas fa-angle-left prev"></i>
+        <div class="date">
+          <h1></h1>
+          <p></p>
+        </div>
+        <i class="fas fa-angle-right next"></i>
       </div>
-      <i class="fas fa-angle-right next"></i>
+      <div class="weekdays">
+        <div>Dom</div>
+        <div>Seg</div>
+        <div>Ter</div>
+        <div>Qua</div>
+        <div>Qui</div>
+        <div>Sex</div>
+        <div>Sab</div>
+      </div>
+      <div class="days" type="submit"></div>
     </div>
-    <div class="weekdays">
-      <div>Dom</div>
-      <div>Seg</div>
-      <div>Ter</div>
-      <div>Qua</div>
-      <div>Qui</div>
-      <div>Sex</div>
-      <div>Sab</div>
+  </div>
+
+  <!-- Janela de Horários -->
+  <div id="horarios-container" class="horarios-container">
+    <div class="horarios">
+      <p>Escolha um Horário:</p>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="09:00"
+        onclick="setSelectedTime(this)"
+      >
+        9h às 10h
+      </button>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="10:00"
+        onclick="setSelectedTime(this)"
+      >
+        10h às 11h
+      </button>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="11:00"
+        onclick="setSelectedTime(this)"
+      >
+        11h às 12h
+      </button>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="12:00"
+        onclick="setSelectedTime(this)"
+      >
+        12h às 13h
+      </button>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="13:00"
+        onclick="setSelectedTime(this)"
+      >
+        13h às 14h
+      </button>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="14:00"
+        onclick="setSelectedTime(this)"
+      >
+        14h às 15h
+      </button>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="15:00"
+        onclick="setSelectedTime(this)"
+      >
+        15h às 16h
+      </button>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="16:00"
+        onclick="setSelectedTime(this)"
+      >
+        16h às 17h
+      </button>
+      <button
+        type="button"
+        class="botao botao-horario"
+        data-time="17:00"
+        onclick="setSelectedTime(this)"
+      >
+        17h às 18h
+      </button>
     </div>
-    <div class="days"></div>
   </div>
-</div>
 
-<!--Criando Janela Horário-->
-<div id="horarios-container" class="horarios-container">
-  <div onclick="openModalAgendamento()" class="horarios">
-    <p>Escolha um Horário:</p>
-
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario"> 9h às 10h</a>
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario">10h às 11h</a>
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario">11h às 12h</a>
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario">12h às 13h</a>
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario">13h às 14h</a>
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario">14h às 15h</a>
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario">15h às 16h</a>
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario">16h às 17h</a>
-    <a href="{% url 'confirmacao' %}" class="botao botao-horario">17h às 18h</a>
-  </div>
-</div>
-
-{% endblock %}
+  {% endblock %}
+</form>

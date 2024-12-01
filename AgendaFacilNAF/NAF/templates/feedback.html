@@ -2,7 +2,8 @@
 <!--Criando página Feedback-->
 
 <div class="feedback">
-  <form action="" class="form form-feedback">
+  <form method="post" action="" class="form form-feedback">
+    {% csrf_token %}
     <div class="item-janela-cabeçalho">
       <label for="name">Nome:</label>
       <input
