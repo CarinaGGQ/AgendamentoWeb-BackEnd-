@@ -16,7 +16,6 @@ const renderCalendar = () => {
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
   const currentDay = currentDate.getDate();
-
   const months = [
     "Janeiro",
     "Fevereiro",
@@ -78,6 +77,20 @@ const renderCalendar = () => {
         openModalHorario();
       });
     }
+
+    day.addEventListener("click", () => {
+      const selectedDate = day.dataset.date;
+      document.getElementById("selected-date").value = selectedDate;
+
+      // Destaca o dia selecionado
+      document
+        .querySelectorAll(".days div")
+        .forEach((d) => d.classList.remove("selected"));
+      day.classList.add("selected");
+
+      // Exibe o modal de horários
+      openModalHorario();
+    });
   });
 };
 
@@ -162,3 +175,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// Navegação do calendário
+document.querySelector(".prev").addEventListener("click", () => {
+  date.setMonth(date.getMonth() - 1);
+  renderCalendar();
+});
+document.querySelector(".next").addEventListener("click", () => {
+  date.setMonth(date.getMonth() + 1);
+  renderCalendar();
+});
+
+// Inicializa o calendário
+renderCalendar();

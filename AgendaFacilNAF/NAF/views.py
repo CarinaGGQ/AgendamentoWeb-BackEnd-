@@ -224,7 +224,6 @@ def gerenciar_professor(request):
   context = {"erro": erro}
   return render(request, 'colaborador/professor.html', context)
 
-
 @login_required
 def gerenciar_administrador(request):
   erro = False
