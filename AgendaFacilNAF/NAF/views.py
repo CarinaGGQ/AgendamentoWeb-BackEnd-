@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from .models import Cliente, Serviço, AgendamentoDisponivel, Agendamento
 from datetime import datetime
 

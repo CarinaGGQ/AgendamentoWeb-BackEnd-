@@ -1,5 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
 <!--Criando página Sou Aluno-->
+
+<h2 class="colaborador-container">Login do Aluno:</h2>
 <div class="aluno">
   {% if erro %}
   <h4>{{mensagem}}</h4>
@@ -36,4 +38,5 @@
     </div>
   </form>
 </div>
+
 {% endblock %}

@@ -88,13 +88,18 @@ nav ul {
   display: inline-block;
 }
 
+.colaborador-container {
+  padding-top: 4rem;
+  padding-left: 12rem;
+}
+
 .aluno,
 .professor,
 .administrador,
 .colaborador {
   width: 44%;
-  height: 42rem;
-  padding: 8rem;
+  height: 34rem;
+  padding: 5rem;
   border-radius: 10px;
   text-align: center;
   align-items: 2rem;
@@ -102,10 +107,14 @@ nav ul {
 
 .feedback {
   width: 44%;
-  padding: 8rem;
+  padding: 4rem 11rem;
   border-radius: 10px;
   text-align: center;
   align-items: 2rem;
+}
+
+.item-janela-feedback {
+  padding-top: 1rem;
 }
 
 .aluno-container.abrir,
@@ -118,19 +127,6 @@ nav ul {
 
 .oculto {
   display: none;
-}
-
-.confirmação-container.abrir {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
 }
 
 @keyframes animate-modal {
@@ -328,7 +324,7 @@ nav ul {
 }
 
 .confirmação {
-  padding-top: 4rem;
+  padding-top: 1rem;
   padding-left: 8rem;
   padding-bottom: 5rem;
 }
@@ -378,6 +374,10 @@ nav ul {
 
 .espaço-maior-bottom {
   padding-bottom: 3.5rem;
+}
+
+.espaço-maior-top {
+  padding-top: 2.5rem;
 }
 
 /*Footer*/

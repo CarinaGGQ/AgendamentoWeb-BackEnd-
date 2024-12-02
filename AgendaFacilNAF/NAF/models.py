@@ -8,7 +8,7 @@ class Cliente(models.Model):
     email = models.CharField(max_length=200, null=False, blank=False)
 
     def __str__(self):
-        return str(self.email)
+        return str(self.nome)
     
 class Serviço(models.Model):
     nome = models.CharField(max_length=200, null=False, blank=False)
@@ -36,7 +36,7 @@ class AgendamentoDisponivel(models.Model):
     hora = models.CharField(max_length=5, choices=LISTA_HORARIOS)
 
     def __str__(self):
-        return f"Dia: {self.dia}, Horário: {self.hora}"
+        return f"{self.dia}, {self.hora}"
 
 class Feedback(models.Model):
     cliente = models.ForeignKey(Cliente, null=False, blank=False, on_delete=models.CASCADE)
