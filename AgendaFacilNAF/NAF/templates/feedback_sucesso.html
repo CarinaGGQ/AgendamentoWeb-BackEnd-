@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<!--Criando página feedback_sucesso-->
+
+<div class="colaborador-container confirmacao_feedback">
+  <h2 class="espaço-maior-top espaço-maior-bottom">
+    Obrigado pelo seu feedback!
+  </h2>
+
+  <a class="botao botao-enviar" href="{% url 'homepage' %}"
+    >Voltar para a homepage</a
+  >
+</div>
+
+{% endblock %}

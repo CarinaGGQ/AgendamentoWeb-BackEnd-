@@ -13,4 +13,5 @@ urlpatterns = [
     path('gerenciar_aluno/', gerenciar_aluno, name="gerenciar_aluno"),
     path('gerenciar_administrador/', gerenciar_administrador, name="gerenciar_administrador"),
     path('confirmacao_sucesso/', confirmacao_sucesso, name="confirmacao_sucesso"),
+    path('feedback_sucesso/', feedback_sucesso, name="feedback_sucesso"),
 ]

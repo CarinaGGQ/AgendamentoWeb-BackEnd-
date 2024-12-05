@@ -3,14 +3,52 @@ from django.urls import reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Cliente, Serviço, AgendamentoDisponivel, Agendamento
+from .models import Cliente, Serviço, AgendamentoDisponivel, Agendamento, Feedback
 from datetime import datetime
 
 def homepage(request):
   return render(request, 'homepage.html')
 
+
 def feedback(request):
-  return render(request, 'feedback.html')
+  # Buscar todos os serviços ativos
+  servicos = Serviço.objects.filter(ativo=True)
+
+  if request.method == 'POST':
+      # Obter os dados do formulário
+      nome_cliente = request.POST.get('name')
+      email_cliente = request.POST.get('email')
+      servico_id = request.POST.get('servico')
+      feedback_text = request.POST.get('feedback')
+
+      if nome_cliente and email_cliente and servico_id and feedback_text:
+          # Buscar ou criar o cliente
+          cliente, _ = Cliente.objects.get_or_create(
+              email=email_cliente,
+              defaults={'nome': nome_cliente}
+          )
+          # Obter o serviço selecionado
+          servico = get_object_or_404(Serviço, id=servico_id)
+
+          # Criar o feedback
+          Feedback.objects.create(
+              cliente=cliente,
+              serviço=servico,
+              feedback=feedback_text
+          )
+
+          # Redirecionar para uma página de sucesso ou resetar o formulário
+          return render(request, 'feedback_sucesso.html', {
+              'cliente': cliente,
+              'servico': servico,
+              'feedback': feedback_text
+          })
+
+  # Renderizar a página de feedback com os serviços disponíveis
+  return render(request, 'feedback.html', {'servicos': servicos})
+
+def feedback_sucesso(request):
+  return render(request, 'feedback_sucesso.html')
 
 def agendamento(request):
     if request.method == 'POST':
@@ -64,7 +102,7 @@ def confirmacao(request):
                 cliente=cliente,
                 serviço=servico,
                 AgendamentoDisponivel=agendamento_disponivel,
-                finalizado=False
+                finalizado=True
             )
 
             redirect_url = f"{reverse('confirmacao_sucesso')}?servico={servico.nome}&data={selected_date}&hora={selected_time}"
@@ -164,18 +202,23 @@ def administrador(request):
 def gerenciar_aluno(request):
   erro = False
   if request.user.groups.filter(name="Alunos").exists():
-    return render(request, 'colaborador/gerenciar_aluno.html')
+    agendamentos = Agendamento.objects.select_related('cliente', 'serviço', 'AgendamentoDisponivel'
+    ).all()  # Busca todos os agendamentos com relações
+    feedbacks = Feedback.objects.all()  # Busca os feedbacks
+    return render(request, 'colaborador/gerenciar_aluno.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
   else:
     erro = True
   context = {"erro": erro}
   return render(request, 'colaborador/aluno.html', context)
 
-
 @login_required
 def gerenciar_professor(request):
   erro = False
   if request.user.groups.filter(name="Professores").exists():
-    return render(request, 'colaborador/gerenciar_professor.html')
+    agendamentos = Agendamento.objects.select_related('cliente', 'serviço', 'AgendamentoDisponivel'
+    ).all()  # Busca todos os agendamentos com relações
+    feedbacks = Feedback.objects.all()  # Busca os feedbacks
+    return render(request, 'colaborador/gerenciar_professor.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
   else:
     erro = True
   context = {"erro": erro}
@@ -186,7 +229,10 @@ def gerenciar_professor(request):
 def gerenciar_administrador(request):
   erro = False
   if request.user.groups.filter(name="Administradores").exists():
-    return render(request, 'colaborador/gerenciar_administrador.html')
+    agendamentos = Agendamento.objects.select_related('cliente', 'serviço', 'AgendamentoDisponivel'
+    ).all()  # Busca todos os agendamentos com relações
+    feedbacks = Feedback.objects.all()  # Busca os feedbacks
+    return render(request, 'colaborador/gerenciar_administrador.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
   else:
     erro = True
   context = {"erro": erro}

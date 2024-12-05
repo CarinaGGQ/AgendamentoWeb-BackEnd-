@@ -41,12 +41,17 @@ class AgendamentoDisponivel(models.Model):
 class Feedback(models.Model):
     cliente = models.ForeignKey(Cliente, null=False, blank=False, on_delete=models.CASCADE)
     serviço = models.ForeignKey(Serviço, null=False, blank=False, on_delete=models.CASCADE)
+    feedback = models.CharField(max_length=2000, null=False, blank=False, default='DEFAULT VALUE')
 
+    def __str__(self):
+        return f"Cliente: {self.cliente.nome}, Serviço: {self.serviço.nome}, Feedback: {self.feedback}"
 
 class Agendamento(models.Model):
     cliente = models.ForeignKey(Cliente, null=False, blank=False, on_delete=models.CASCADE)
     serviço = models.ForeignKey(Serviço, null=False, blank=False, on_delete=models.CASCADE)
-    finalizado = models.BooleanField(default=False)
-    codigo_transacao = models.CharField(max_length=200, null=True, blank=True)
     AgendamentoDisponivel = models.ForeignKey(AgendamentoDisponivel, null=False, blank=False, on_delete=models.CASCADE)
+    finalizado = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"Cliente: {self.cliente.nome}, Serviço: {self.serviço.nome}, Agendamento: {self.AgendamentoDisponivel.dia} - {self.AgendamentoDisponivel.hora}"
+    

@@ -1,5 +1,56 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
-<!--Criando página gerenciar_loja-->
+<!--Criando página gerenciar_professor-->
+<h1>Agendamentos:</h1>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Cliente</th>
+      <th>Serviço</th>
+      <th>Dia</th>
+      <th>Hora</th>
+      <th>Finalizado</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for agendamento in agendamentos %}
+    <tr>
+      <td>{{ agendamento.id }}</td>
+      <td>{{ agendamento.cliente.nome }}</td>
+      <td>{{ agendamento.serviço.nome }}</td>
+      <td>{{ agendamento.AgendamentoDisponivel.dia }}</td>
+      <td>{{ agendamento.AgendamentoDisponivel.hora }}</td>
+      <td>{{ agendamento.finalizado|yesno:"Sim,Não" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="6">Nenhum agendamento disponível</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
-<h3 class="colaborador">Gerenciar Professor</h3>
+<h1>Feedbacks:</h1>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Serviço</th>
+      <th>Feedback</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for feedback in feedbacks %}
+    <tr>
+      <td>{{ feedback.cliente.nome }}</td>
+      <td>{{ feedback.serviço.nome }}</td>
+      <td>{{ feedback.feedback }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="3">Nenhum feedback disponível</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

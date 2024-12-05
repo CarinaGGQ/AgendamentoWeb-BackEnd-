@@ -18,15 +18,16 @@
     </div>
 
     <div class="item-janela-cabeçalho">
-      <label for="name">Serviço:</label>
-      <input
-        type="text"
-        id="serviço"
-        name="serviço"
-        placeholder="*Digite o serviço prestado"
-        required
-        autocomplete="serviço"
-      />
+      <label for="servico">Serviço:</label>
+      <select name="servico" id="servico" required>
+        <option value="">Selecione um serviço</option>
+        {% for servico in servicos %}
+        <option value="{{ servico.id }}">{{ servico.nome }}</option>
+        {% endfor %}
+      </select>
+      {% if not servicos %}
+      <p>Nenhum serviço encontrado!</p>
+      {% endif %}
     </div>
 
     <div class="item-janela-cabeçalho">
