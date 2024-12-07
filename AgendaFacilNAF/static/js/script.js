@@ -77,20 +77,6 @@ const renderCalendar = () => {
         openModalHorario();
       });
     }
-
-    day.addEventListener("click", () => {
-      const selectedDate = day.dataset.date;
-      document.getElementById("selected-date").value = selectedDate;
-
-      // Destaca o dia selecionado
-      document
-        .querySelectorAll(".days div")
-        .forEach((d) => d.classList.remove("selected"));
-      day.classList.add("selected");
-
-      // Exibe o modal de horários
-      openModalHorario();
-    });
   });
 };
 
