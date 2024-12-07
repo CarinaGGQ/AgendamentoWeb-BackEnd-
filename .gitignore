@@ -1,1 +1,5 @@
 AgendaFacilNAF/db.sqlite3 
+__pycache__/
+*.pyc
+*/migrations/*.py
+!*/migrations/__init__.py
