@@ -383,6 +383,10 @@ nav ul {
   padding-bottom: 3.5rem;
 }
 
+.espaço-menor-bottom {
+  padding-bottom: 1rem;
+}
+
 .espaço-maior-top {
   padding-top: 2.5rem;
 }

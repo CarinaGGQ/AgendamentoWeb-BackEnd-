@@ -12,6 +12,11 @@ const renderCalendar = () => {
     0
   ).getDate();
   const firstDayIndex = date.getDay();
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  const currentDay = currentDate.getDate();
+
   const months = [
     "Janeiro",
     "Fevereiro",
@@ -33,13 +38,20 @@ const renderCalendar = () => {
   let days = "";
 
   for (let i = 1; i <= lastDay; i++) {
-    const currentDate = new Date();
     const isToday =
-      i === currentDate.getDate() &&
-      date.getMonth() === currentDate.getMonth() &&
-      date.getFullYear() === currentDate.getFullYear();
+      i === currentDay &&
+      date.getMonth() === currentMonth &&
+      date.getFullYear() === currentYear;
+    const isPastDay =
+      date.getFullYear() < currentYear ||
+      (date.getFullYear() === currentYear && date.getMonth() < currentMonth) ||
+      (date.getFullYear() === currentYear &&
+        date.getMonth() === currentMonth &&
+        i < currentDay);
 
-    days += `<div class="${isToday ? "today" : ""}" data-date="${i}/${
+    days += `<div class="${isToday ? "today" : ""} ${
+      isPastDay ? "passado" : ""
+    }" data-date="${i}/${
       date.getMonth() + 1
     }/${date.getFullYear()}">${i}</div>`;
   }
@@ -48,19 +60,24 @@ const renderCalendar = () => {
 
   // Adicionar eventos de clique aos dias
   document.querySelectorAll(".days div").forEach((day) => {
-    day.addEventListener("click", () => {
-      const selectedDate = day.dataset.date;
-      document.getElementById("selected-date").value = selectedDate;
+    const isPastDay = day.classList.contains("passado");
 
-      // Destaca o dia selecionado
-      document
-        .querySelectorAll(".days div")
-        .forEach((d) => d.classList.remove("selected"));
-      day.classList.add("selected");
+    // Bloqueia dias passados
+    if (!isPastDay) {
+      day.addEventListener("click", () => {
+        const selectedDate = day.dataset.date;
+        document.getElementById("selected-date").value = selectedDate;
 
-      // Exibe o modal de horários
-      openModalHorario();
-    });
+        // Destaca o dia selecionado
+        document
+          .querySelectorAll(".days div")
+          .forEach((d) => d.classList.remove("selected"));
+        day.classList.add("selected");
+
+        // Exibe o modal de horários
+        openModalHorario();
+      });
+    }
   });
 };
 
@@ -126,6 +143,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selectedDateInput) {
       const formattedDate = formatDateToISO(selectedDateInput.value);
       selectedDateInput.value = formattedDate; // Atualiza o valor antes do envio
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", (event) => {
+    const nome = document.querySelector("#name").value.trim();
+    const servico = document.querySelector("#servico").value.trim();
+    const email = document.querySelector("#email").value.trim();
+    const feedback = document.querySelector("#feedback").value.trim();
+
+    if (!nome || !servico || !email || !feedback) {
+      event.preventDefault(); // Impede o envio do formulário
+      alert("Por favor, preencha todos os campos antes de enviar!");
     }
   });
 });
