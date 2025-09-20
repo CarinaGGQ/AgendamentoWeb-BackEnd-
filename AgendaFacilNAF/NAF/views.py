@@ -2,118 +2,130 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from .models import Cliente, Serviço, AgendamentoDisponivel, Agendamento, Feedback
+from django.http import JsonResponse
+from django.utils.dateparse import parse_date
+from .models import Cliente, Serviço, AgendamentoDisponivel, Agendamento, Feedback, LISTA_HORARIOS
 from datetime import datetime
 
+
 def homepage(request):
-  return render(request, 'homepage.html')
+    return render(request, 'homepage.html')
 
 
 def feedback(request):
-  # Buscar todos os serviços ativos
-  servicos = Serviço.objects.filter(ativo=True)
-
-  if request.method == 'POST':
-      # Obter os dados do formulário
-      nome_cliente = request.POST.get('name')
-      email_cliente = request.POST.get('email')
-      servico_id = request.POST.get('servico')
-      feedback_text = request.POST.get('feedback')
-
-      if nome_cliente and email_cliente and servico_id and feedback_text:
-          # Buscar ou criar o cliente
-          cliente, _ = Cliente.objects.get_or_create(
-              email=email_cliente,
-              defaults={'nome': nome_cliente}
-          )
-          # Obter o serviço selecionado
-          servico = get_object_or_404(Serviço, id=servico_id)
-
-          # Criar o feedback
-          Feedback.objects.create(
-              cliente=cliente,
-              serviço=servico,
-              feedback=feedback_text
-          )
-
-          # Redirecionar para uma página de sucesso ou resetar o formulário
-          return render(request, 'feedback_sucesso.html', {
-              'cliente': cliente,
-              'servico': servico,
-              'feedback': feedback_text
-          })
-
-  # Renderizar a página de feedback com os serviços disponíveis
-  return render(request, 'feedback.html', {'servicos': servicos})
-
-def feedback_sucesso(request):
-  return render(request, 'feedback_sucesso.html')
-
-def agendamento(request):
-    if request.method == 'POST':
-        selected_date = request.POST.get('selected_date', '')
-        selected_time = request.POST.get('selected_time', '')
-
-        # Redireciona para a página de confirmação com os dados
-        return redirect(f"{reverse('confirmacao')}?selected_date={selected_date}&selected_time={selected_time}")
-
-    return render(request, 'agendamento.html')
-
-def confirmacao(request):
-    # Buscar dados de data e hora da URL (GET)
-    selected_date = request.GET.get('selected_date', '')
-    selected_time = request.GET.get('selected_time', '')
-
-    # Corrigir o formato da data, se necessário
-    try:
-        if selected_date:
-            # Converte de DD/MM/YYYY para YYYY-MM-DD
-            selected_date = datetime.strptime(selected_date, '%d/%m/%Y').strftime('%Y-%m-%d')
-    except ValueError:
-        # Caso o formato esteja incorreto, pode lançar um erro personalizado
-        return HttpResponse("Formato de data inválido.", status=400)
-
-    # Buscar todos os serviços ativos
     servicos = Serviço.objects.filter(ativo=True)
 
     if request.method == 'POST':
-        # Obter dados enviados via formulário
         nome_cliente = request.POST.get('name')
         email_cliente = request.POST.get('email')
         servico_id = request.POST.get('servico')
+        feedback_text = request.POST.get('feedback')
 
-        if nome_cliente and email_cliente and selected_date and selected_time and servico_id:
-            # Buscar ou criar o cliente
+        if nome_cliente and email_cliente and servico_id and feedback_text:
             cliente, _ = Cliente.objects.get_or_create(
                 email=email_cliente,
                 defaults={'nome': nome_cliente}
             )
-            # Obter o serviço selecionado
             servico = get_object_or_404(Serviço, id=servico_id)
-            # Criar ou obter agendamento disponível
-            agendamento_disponivel, _ = AgendamentoDisponivel.objects.get_or_create(
-                dia=selected_date,
-                hora=selected_time
-            )
 
-            # Criar o agendamento
-            Agendamento.objects.create(
+            Feedback.objects.create(
                 cliente=cliente,
                 serviço=servico,
-                AgendamentoDisponivel=agendamento_disponivel,
-                finalizado=True
+                feedback=feedback_text
             )
 
-            redirect_url = f"{reverse('confirmacao_sucesso')}?servico={servico.nome}&data={selected_date}&hora={selected_time}"
-            return redirect(redirect_url)
+            return render(request, 'feedback_sucesso.html', {
+                'cliente': cliente,
+                'servico': servico,
+                'feedback': feedback_text
+            })
 
-    # Renderizar a página de confirmação com os dados e serviços
-    return render(request, 'confirmacao.html', {
-        'selected_date': selected_date,
-        'selected_time': selected_time,
+    return render(request, 'feedback.html', {'servicos': servicos})
+
+
+def feedback_sucesso(request):
+    return render(request, 'feedback_sucesso.html')
+
+
+# ------------------- AGENDAMENTO -------------------
+
+def horarios_disponiveis(request):
+    data = request.GET.get("data")
+    if not data:
+        return JsonResponse({"error": "Data não fornecida"}, status=400)
+
+    horarios_validos = [h[0] for h in LISTA_HORARIOS]
+    ocupados = AgendamentoDisponivel.objects.filter(dia=data).values_list("hora", flat=True)
+
+    disponiveis = [h for h in horarios_validos if h not in ocupados]
+
+    horarios_label = dict(LISTA_HORARIOS)
+    response = [{"hora": h, "label": horarios_label[h]} for h in disponiveis]
+
+    return JsonResponse(response, safe=False)
+
+def agendamento(request):
+    # Buscar apenas horários que NÃO estão associados a agendamentos
+    agendamentos_ocupados = Agendamento.objects.values_list('agendamento_disponivel_id', flat=True)
+    horarios_disponiveis = AgendamentoDisponivel.objects.exclude(id__in=agendamentos_ocupados)
+
+    servicos = Serviço.objects.filter(ativo=True)
+
+    return render(request, 'agendamento.html', {
         'servicos': servicos,
+        'horarios_disponiveis': horarios_disponiveis
     })
+
+
+def confirmacao(request):
+    if request.method == "POST":
+        nome = request.POST.get("name")
+        email = request.POST.get("email")
+        servico_id = request.POST.get("servico")
+        selected_date = request.POST.get("selected_date")
+        selected_time = request.POST.get("selected_time")
+
+        # Cliente
+        cliente, _ = Cliente.objects.get_or_create(nome=nome, email=email)
+
+        # Serviço
+        servico = Serviço.objects.get(id=servico_id)
+
+        # Agenda disponível
+        agendamento_disp, _ = AgendamentoDisponivel.objects.get_or_create(
+            dia=selected_date,
+            hora=selected_time
+        )
+
+        # Criar o agendamento
+        Agendamento.objects.create(
+            cliente=cliente,
+            serviço=servico,
+            agendamento_disponivel=agendamento_disp,
+            finalizado=True
+        )
+
+        # Formatar data para exibir
+        formatted_date = datetime.strptime(selected_date, "%Y-%m-%d").strftime("%d/%m/%Y")
+
+        # Redirecionar para página de sucesso com contexto
+        return render(request, "confirmacao_sucesso.html", {
+            "data": formatted_date,
+            "hora": selected_time,
+            "servico": servico.nome
+        })
+
+    else:
+        selected_date = request.GET.get("selected_date")
+        selected_time = request.GET.get("selected_time")
+        formatted_date = datetime.strptime(selected_date, "%Y-%m-%d").strftime("%d/%m/%Y")
+
+        return render(request, "confirmacao.html", {
+            "selected_date": selected_date,
+            "formatted_date": formatted_date,
+            "selected_time": selected_time,
+            "servicos": Serviço.objects.filter(ativo=True),
+        })
 
 def confirmacao_sucesso(request):
     servico = request.GET.get('servico', '')
@@ -126,113 +138,117 @@ def confirmacao_sucesso(request):
         'hora': hora,
     })
 
+
+# ------------------- LOGIN E PAINÉIS -------------------
+
 def aluno(request):
-  erro = False
-  mensagem = ""
+    erro = False
+    mensagem = ""
 
-  if request.method == "POST":
-    username = request.POST.get("username")
-    password = request.POST.get("password")
-    usuario = authenticate(request, username=username, password=password)
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        usuario = authenticate(request, username=username, password=password)
 
-    if usuario:
-      # Verifica se o usuário pertence ao grupo "Alunos"
-      if usuario.groups.filter(name="Alunos").exists():
-        login(request, usuario)
-        return redirect('gerenciar_aluno')  # Redireciona para a página gerenciada pelo grupo
-      else:
-        mensagem = "Você não tem permissão para acessar como Aluno."
-        erro = True
-    else:
-      mensagem = "Credenciais inválidas. Verifique o nome de usuário e senha."
-      erro = True
+        if usuario:
+            if usuario.groups.filter(name="Alunos").exists():
+                login(request, usuario)
+                return redirect('gerenciar_aluno')
+            else:
+                mensagem = "Você não tem permissão para acessar como Aluno."
+                erro = True
+        else:
+            mensagem = "Credenciais inválidas."
+            erro = True
 
-  return render(request, 'colaborador/aluno.html', {"erro": erro, "mensagem": mensagem})
+    return render(request, 'colaborador/aluno.html', {"erro": erro, "mensagem": mensagem})
 
 
 def professor(request):
-  erro = False
-  mensagem = ""
+    erro = False
+    mensagem = ""
 
-  if request.method == "POST":
-    username = request.POST.get("username")
-    password = request.POST.get("password")
-    usuario = authenticate(request, username=username, password=password)
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        usuario = authenticate(request, username=username, password=password)
 
-    if usuario:
-      # Verifica se o usuário pertence ao grupo "Professores"
-      if usuario.groups.filter(name="Professores").exists():
-        login(request, usuario)
-        return redirect('gerenciar_professor')  # Redireciona para a página gerenciada pelo grupo
-      else:
-        mensagem = "Você não tem permissão para acessar como Professor."
-        erro = True
-    else:
-      mensagem = "Credenciais inválidas. Verifique o nome de usuário e senha."
-      erro = True
+        if usuario:
+            if usuario.groups.filter(name="Professores").exists():
+                login(request, usuario)
+                return redirect('gerenciar_professor')
+            else:
+                mensagem = "Você não tem permissão para acessar como Professor."
+                erro = True
+        else:
+            mensagem = "Credenciais inválidas."
+            erro = True
 
-  return render(request, 'colaborador/professor.html', {"erro": erro, "mensagem": mensagem})
+    return render(request, 'colaborador/professor.html', {"erro": erro, "mensagem": mensagem})
 
 
 def administrador(request):
-  erro = False
-  mensagem = ""
+    erro = False
+    mensagem = ""
 
-  if request.method == "POST":
-    username = request.POST.get("username")
-    password = request.POST.get("password")
-    usuario = authenticate(request, username=username, password=password)
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        usuario = authenticate(request, username=username, password=password)
 
-    if usuario:
-      # Verifica se o usuário pertence ao grupo "Administradores"
-      if usuario.groups.filter(name="Administradores").exists():
-        login(request, usuario)
-        return redirect('gerenciar_administrador')  # Redireciona para a página gerenciada pelo grupo
-      else:
-        mensagem = "Você não tem permissão para acessar como Administrador."
-        erro = True
-    else:
-      mensagem = "Credenciais inválidas. Verifique o nome de usuário e senha."
-      erro = True
+        if usuario:
+            if usuario.groups.filter(name="Administradores").exists():
+                login(request, usuario)
+                return redirect('gerenciar_administrador')
+            else:
+                mensagem = "Você não tem permissão para acessar como Administrador."
+                erro = True
+        else:
+            mensagem = "Credenciais inválidas."
+            erro = True
 
-  return render(request, 'colaborador/administrador.html', {"erro": erro, "mensagem": mensagem})
+    return render(request, 'colaborador/administrador.html', {"erro": erro, "mensagem": mensagem})
 
 
 @login_required
 def gerenciar_aluno(request):
-  erro = False
-  if request.user.groups.filter(name="Alunos").exists():
-    agendamentos = Agendamento.objects.select_related('cliente', 'serviço', 'AgendamentoDisponivel'
-    ).all()  # Busca todos os agendamentos com relações
-    feedbacks = Feedback.objects.all()  # Busca os feedbacks
-    return render(request, 'colaborador/gerenciar_aluno.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
-  else:
-    erro = True
-  context = {"erro": erro}
-  return render(request, 'colaborador/aluno.html', context)
+    if request.user.groups.filter(name="Alunos").exists():
+        agendamentos = Agendamento.objects.all()
+        feedbacks = Feedback.objects.all()
+        return render(request, 'colaborador/gerenciar_aluno.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
+    return render(request, 'colaborador/aluno.html', {"erro": True})
+
 
 @login_required
 def gerenciar_professor(request):
-  erro = False
-  if request.user.groups.filter(name="Professores").exists():
-    agendamentos = Agendamento.objects.select_related('cliente', 'serviço', 'AgendamentoDisponivel'
-    ).all()  # Busca todos os agendamentos com relações
-    feedbacks = Feedback.objects.all()  # Busca os feedbacks
-    return render(request, 'colaborador/gerenciar_professor.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
-  else:
-    erro = True
-  context = {"erro": erro}
-  return render(request, 'colaborador/professor.html', context)
+    if request.user.groups.filter(name="Professores").exists():
+        agendamentos = Agendamento.objects.all()
+        feedbacks = Feedback.objects.all()
+        return render(request, 'colaborador/gerenciar_professor.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
+    return render(request, 'colaborador/professor.html', {"erro": True})
+
 
 @login_required
 def gerenciar_administrador(request):
-  erro = False
-  if request.user.groups.filter(name="Administradores").exists():
-    agendamentos = Agendamento.objects.select_related('cliente', 'serviço', 'AgendamentoDisponivel'
-    ).all()  # Busca todos os agendamentos com relações
-    feedbacks = Feedback.objects.all()  # Busca os feedbacks
-    return render(request, 'colaborador/gerenciar_administrador.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
-  else:
-    erro = True
-  context = {"erro": erro}
-  return render(request, 'colaborador/administrador.html', context)
+    if request.user.groups.filter(name="Administradores").exists():
+        agendamentos = Agendamento.objects.all()
+        feedbacks = Feedback.objects.all()
+        return render(request, 'colaborador/gerenciar_administrador.html', {'agendamentos': agendamentos, 'feedbacks': feedbacks})
+    return render(request, 'colaborador/administrador.html', {"erro": True})
+
+
+# ------------------- EVENTOS -------------------
+
+def eventos(request):
+    agendamentos = Agendamento.objects.all()
+    eventos = [
+        {
+            "title": agendamento.titulo,
+            "start": agendamento.inicio.isoformat(),
+            "end": agendamento.fim.isoformat(),
+            "date": agendamento.inicio.date().isoformat(),
+            "time": agendamento.inicio.strftime("%H:%M"),
+        }
+        for agendamento in agendamentos
+    ]
+    return JsonResponse(eventos, safe=False)

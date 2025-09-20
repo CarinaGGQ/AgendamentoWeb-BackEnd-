@@ -1,63 +1,78 @@
-{% extends 'base.html' %} {% load static %} {% block body %}
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
 
-<!--Criando Janela Confirmação de Agendamento-->
-<div id="confirmação-container" class="confirmação-container">
-  <div class="confirmação">
+<div id="confirmacao-container" class="confirmacao-container">
+  <div class="confirmacao">
+
+    <!-- Resumo do agendamento -->
+    <h2>Confirmação do Agendamento</h2>
     <p>
-      Agendamento Selecionado: <br />
-      Data: {{selected_date}} <br />
-      Horário: {{selected_time}}
+      <strong>Data:</strong> {{ formatted_date }} <br />
+      <strong>Horário:</strong> {{ selected_time }}
     </p>
+
+    {% if erro %}
+      <p style="color:red;">{{ erro }}</p>
+    {% endif %}
+
+    <hr />
+
     <div class="campos-cadastro">
       <p>
-        Para efetivação do seu agendamento por favor, preencha os campos abaixo.
+        Para efetivar o agendamento, preencha os dados abaixo:
       </p>
     </div>
 
-    <form method="post">
+    <!-- Formulário -->
+    <form method="post" action="{% url 'confirmacao' %}">
       {% csrf_token %}
+
+      <!-- Campos ocultos que garantem o formato correto para o backend -->
       <input type="hidden" name="selected_date" value="{{ selected_date }}" />
       <input type="hidden" name="selected_time" value="{{ selected_time }}" />
 
-      <div class="item-janela-cabeçalho">
+      <div class="item-janela-cabecalho">
         <label for="name">Nome:</label>
         <input
           type="text"
           id="name"
           name="name"
+          value="{{ nome }}"
           placeholder="*Seu nome completo"
           required
         />
       </div>
 
-      <div class="item-janela-cabeçalho">
+      <div class="item-janela-cabecalho">
         <label for="email">E-mail:</label>
         <input
           type="email"
           id="email"
           name="email"
+          value="{{ email }}"
           placeholder="*Digite seu e-mail"
           required
         />
       </div>
 
-      <div class="item-janela-cabeçalho">
+      <div class="item-janela-cabecalho">
         <label for="servico">Serviço:</label>
         <select name="servico" id="servico" required>
           <option value="">Selecione um serviço</option>
-          {% for servico in servicos %}
-          <option value="{{ servico.id }}">{{ servico.nome }}</option>
+          {% for s in servicos %}
+            <option value="{{ s.id }}" {% if servico|stringformat:"s" == s.id|stringformat:"s" %}selected{% endif %}>
+              {{ s.nome }}
+            </option>
           {% endfor %}
         </select>
-        {% if not servicos %}
-        <p>Nenhum serviço encontrado!</p>
-        {% endif %}
       </div>
 
       <div class="botao-enviar botao-confirmacao">
-        <button type="submit" class="botao">Confirmar</button>
+        <button type="submit" class="botao">✅ Confirmar Agendamento</button>
       </div>
     </form>
+
   </div>
 </div>
 

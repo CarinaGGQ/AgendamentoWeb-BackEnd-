@@ -21,7 +21,7 @@ body {
 
 h1 {
   font-family: "Arapey", sans-serif;
-  font-size: 7.5rem;
+  font-size: 6rem;
   line-height: 1;
   padding: 1.2rem 0;
   display: block;
@@ -75,7 +75,7 @@ select:focus,
 input:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  box-shadow: 0 0 0.31rem rgba(0, 123, 255, 0.5);
 }
 
 select option {

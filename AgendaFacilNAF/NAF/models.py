@@ -1,15 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
+# ---------------- CLIENTE ----------------
 class Cliente(models.Model):
     nome = models.CharField(max_length=200, null=False, blank=False)
     email = models.CharField(max_length=200, null=False, blank=False)
 
     def __str__(self):
         return str(self.nome)
-    
+
+
+# ---------------- SERVIÇO ----------------
 class Serviço(models.Model):
     nome = models.CharField(max_length=200, null=False, blank=False)
     ativo = models.BooleanField(default=True)
@@ -17,6 +18,8 @@ class Serviço(models.Model):
     def __str__(self):
         return str(self.nome)
 
+
+# ---------------- LISTA DE HORÁRIOS ----------------
 LISTA_HORARIOS = (
     ("9h", "9h às 10h"),
     ("10h", "10h às 11h"),
@@ -30,7 +33,7 @@ LISTA_HORARIOS = (
 )
 
 
-
+# ---------------- AGENDAMENTO DISPONÍVEL ----------------
 class AgendamentoDisponivel(models.Model):
     dia = models.DateField(null=False, blank=False)
     hora = models.CharField(max_length=5, choices=LISTA_HORARIOS)
@@ -38,6 +41,8 @@ class AgendamentoDisponivel(models.Model):
     def __str__(self):
         return f"{self.dia}, {self.hora}"
 
+
+# ---------------- FEEDBACK ----------------
 class Feedback(models.Model):
     cliente = models.ForeignKey(Cliente, null=False, blank=False, on_delete=models.CASCADE)
     serviço = models.ForeignKey(Serviço, null=False, blank=False, on_delete=models.CASCADE)
@@ -46,12 +51,14 @@ class Feedback(models.Model):
     def __str__(self):
         return f"Cliente: {self.cliente.nome}, Serviço: {self.serviço.nome}, Feedback: {self.feedback}"
 
+
+# ---------------- AGENDAMENTO ----------------
 class Agendamento(models.Model):
     cliente = models.ForeignKey(Cliente, null=False, blank=False, on_delete=models.CASCADE)
     serviço = models.ForeignKey(Serviço, null=False, blank=False, on_delete=models.CASCADE)
-    AgendamentoDisponivel = models.ForeignKey(AgendamentoDisponivel, null=False, blank=False, on_delete=models.CASCADE)
+    agendamento_disponivel = models.ForeignKey(AgendamentoDisponivel, null=False, blank=False, on_delete=models.CASCADE)
     finalizado = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Cliente: {self.cliente.nome}, Serviço: {self.serviço.nome}, Agendamento: {self.AgendamentoDisponivel.dia} - {self.AgendamentoDisponivel.hora}"
-    
+        # Corrigir para usar o nome correto do campo: agendamento_disponivel
+        return f"Cliente: {self.cliente.nome}, Serviço: {self.serviço.nome}, Agendamento: {self.agendamento_disponivel.dia} - {self.agendamento_disponivel.hora}"
