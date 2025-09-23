@@ -2,8 +2,8 @@
 
 ## 📖 Sobre o Projeto
 
-Este é um **MVP (Minimum Viable Product)** de agendamento web responsivo, desenvolvido como projeto final da faculdade. 
-O grupo desse projeto é formado por apenas 1 pessoa: Carina Guida Graça Quintella. 
+Este é um **MVP (Minimum Viable Product)** de agendamento web responsivo, desenvolvido como projeto final da faculdade.\\ 
+O grupo desse projeto é formado por apenas 1 pessoa: Carina Guida Graça Quintella.\\ 
 O objetivo principal é criar uma solução digital que permita o agendamento eficiente e conveniente de atendimentos do **Núcleo de Apoio Fiscal e Contábil (NAF)** da **UNIFESO**.
 
 ### 🎯 O Desafio
