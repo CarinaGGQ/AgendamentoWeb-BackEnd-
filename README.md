@@ -2,7 +2,9 @@
 
 ## 📖 Sobre o Projeto
 
-Este é um **MVP (Minimum Viable Product)** de Back-End, desenvolvido para integrar o Front-End (HTML, CSS e JavaScript) com uma estrutura robusta no Back-End utilizando **Python** e o framework **Django**. O objetivo principal é criar uma solução digital que permita o agendamento eficiente e conveniente de atendimentos no **Núcleo de Apoio Fiscal e Contábil (NAF)**.
+Este é um **MVP (Minimum Viable Product)** de agendamento web responsivo, desenvolvido como projeto final da faculdade. 
+O grupo desse projeto é formado por apenas 1 pessoa: Carina Guida Graça Quintella. 
+O objetivo principal é criar uma solução digital que permita o agendamento eficiente e conveniente de atendimentos do **Núcleo de Apoio Fiscal e Contábil (NAF)** da **UNIFESO**.
 
 ### 🎯 O Desafio
 
@@ -14,9 +16,11 @@ O planejamento foi realizado utilizando uma planilha no Excel baseada na metodol
 
 ### 🛠️ Ferramentas Utilizadas
 
-- **Framework**: Django (Python)
+- **Framework**: Django
+- **Biblioteca**: FullCalendar
 - **Editor de Código**: Visual Studio Code
 - **Linguagens Front-End**: HTML, CSS e JavaScript
+- **Linguagens Back-End**: Python
 
 ---
 
@@ -67,9 +71,7 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 
 ## 🚀 Instruções para Executar o MVP
 
-> **Nota:** O layout mobile ainda está em ajuste para melhor adequação. O acesso está otimizado para computadores.
-
-1. Para executar a página localmente se deve copiar todos os códigos e usá-los no editor de códigos de sua preferência;
+1. Para executar a página localmente se deve copiar todos os códigos e usá-los no editor de códigos de sua preferência ou clonar o repositório;
 
 2. Deve-se instalar o Django (pip install Django);
 
