@@ -33,6 +33,11 @@ h2 {
   font-weight: 400;
 }
 
+.h2-agendamento {
+  padding-top: 2rem;
+  padding-left: 2.5rem;
+}
+
 h3 {
   font-family: "Arapey", sans-serif;
   font-size: 4rem;
@@ -110,6 +115,11 @@ select::placeholder {
   border-right: solid 0.4rem #08412b;
   background-image: linear-gradient(180deg, #136b49, #545a58);
   cursor: pointer;
+}
+
+.botao:hover {
+  border: solid 0.2rem #136b49;
+  background-color: #136b49;
 }
 
 .rodape {

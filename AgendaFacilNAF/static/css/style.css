@@ -90,6 +90,7 @@ nav ul {
 
 .colaborador-container {
   padding-top: 4rem;
+  padding-bottom: 4rem;
   padding-left: 12rem;
 }
 
@@ -171,6 +172,21 @@ nav ul {
   padding-bottom: 1rem;
 }
 
+/* Páginas Gerenciar */
+
+.espaço-maior-bottom {
+  padding-bottom: 3.5rem;
+}
+
+.espaço-menor-bottom {
+  padding-bottom: 1rem;
+}
+
+.espaço-maior-top {
+  padding-top: 2.5rem;
+}
+
+
 /* Seção Apresentação */
 
 .secao-apresentacao {
@@ -201,7 +217,16 @@ nav ul {
   font-weight: 600;
 }
 
+.horarios {
+  padding: 2rem 0rem;
+  margin: 1rem;
+  display: flex;
+  gap: 1rem;
+}
 
+.botao-horario {
+  font-size: 2rem;
+}
 
 
 .confirmacao-container {
@@ -264,6 +289,10 @@ input, select {
   border-radius: 10px;
   box-shadow: 0 0.25rem 0.375rem rgba(0,0,0,0.1);
   font-family: Arial, sans-serif;
+}
+
+.container {
+  padding: 3rem 3rem;
 }
 
 /* Cabeçalho (mês e botões) */

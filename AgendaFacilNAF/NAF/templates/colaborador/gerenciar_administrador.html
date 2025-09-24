@@ -20,8 +20,8 @@
         <td>{{ agendamento.id }}</td>
         <td>{{ agendamento.cliente.nome }}</td>
         <td>{{ agendamento.serviço.nome }}</td>
-        <td>{{ agendamento.AgendamentoDisponivel.dia }}</td>
-        <td>{{ agendamento.AgendamentoDisponivel.hora }}</td>
+        <td>{{ agendamento.agendamento_disponivel.dia }}</td>
+        <td>{{ agendamento.agendamento_disponivel.hora }}</td>
         <td>{{ agendamento.finalizado|yesno:"Sim,Não" }}</td>
       </tr>
       {% empty %}

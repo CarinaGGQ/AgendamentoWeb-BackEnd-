@@ -2,7 +2,7 @@
 {% load static %}
 {% block body %}
 
-<h2>Agende um horário</h2>
+<h2 class="h2-agendamento">Escolha uma data:</h2>
 
 <!-- FullCalendar CSS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
@@ -20,19 +20,21 @@
   <div id="calendar"></div>
 
   <!-- Horários (inicialmente escondidos) -->
-  <div id="horarios-container" style="display:none; margin-top:20px;">
-    <h4>Escolha um horário:</h4>
-    <div id="horarios" class="horarios">
-      <!-- Os botões de horários serão carregados via JavaScript -->
+  <div class="container">
+    <div id="horarios-container">
+      <h2>Escolha um horário:</h2>
+      <div id="horarios" class="horarios">
+        <!-- Os botões de horários serão carregados via JavaScript -->
+      </div>
     </div>
+      
+    <button type="submit"
+      class="botao btn btn-primary mt-3"
+      style="display:none;"
+      id="btn-confirmar">
+      Confirmar
+    </button>
   </div>
-
-  <button type="submit"
-          class="btn btn-primary mt-3"
-          style="display:none;"
-          id="btn-confirmar">
-    Confirmar Agendamento
-  </button>
 </form>
 
 <!-- FullCalendar -->
