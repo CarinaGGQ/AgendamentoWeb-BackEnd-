@@ -4,66 +4,73 @@ document.addEventListener('DOMContentLoaded', function () {
     let btnConfirmar = document.getElementById('btn-confirmar');
     let horariosDiv = document.querySelector('.horarios');
 
-    let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'pt-br',
-        selectable: true,
-        dateClick: function (info) {
-            let selectedDate = info.dateStr;
-            document.getElementById('selected-date').value = selectedDate;
+    if (calendarEl) {
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'pt-br',
+            selectable: true,
+            contentHeight: 'auto',  // 🔹 altura automática
+            expandRows: true,       // 🔹 força expandir para mostrar todas as semanas
+            dateClick: function (info) {
+                let selectedDate = info.dateStr;
+                document.getElementById('selected-date').value = selectedDate;
 
-            // Esconde botão de confirmar até escolher horário
-            btnConfirmar.style.display = 'none';
+                btnConfirmar.style.display = 'none';
+                horariosDiv.innerHTML = '';
 
-            // Limpa horários antigos
-            horariosDiv.innerHTML = '';
+                fetch(`/horarios_disponiveis/?data=${selectedDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length === 0) {
+                            horariosDiv.innerHTML = '<p>Nenhum horário disponível no momento.</p>';
+                        } else {
+                            data.forEach(item => {
+                                let btn = document.createElement('button');
+                                btn.type = 'button';
+                                btn.className = 'botao-horario';
+                                btn.setAttribute('data-time', item.hora);
+                                btn.textContent = item.label;
+                                btn.onclick = function () { setSelectedTime(this, selectedDate); };
+                                horariosDiv.appendChild(btn);
+                            });
+                        }
+                        horariosContainer.style.display = 'block';
+                    })
+                    .catch(err => {
+                        console.error('Erro ao carregar horários:', err);
+                        horariosDiv.innerHTML = '<p>Erro ao carregar horários.</p>';
+                        horariosContainer.style.display = 'block';
+                    });
+            }
+        });
 
-            // Requisição AJAX para obter horários disponíveis
-            fetch(`/horarios_disponiveis/?data=${selectedDate}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        horariosDiv.innerHTML = '<p>Nenhum horário disponível no momento.</p>';
-                    } else {
-                        data.forEach(item => {
-                            let btn = document.createElement('button');
-                            btn.type = 'button';
-                            btn.className = 'botao-horario';
-                            btn.setAttribute('data-time', item.hora);
-                            btn.textContent = item.label;
-                            btn.onclick = function () { setSelectedTime(this, selectedDate); };
-                            horariosDiv.appendChild(btn);
-                        });
-                    }
-                    horariosContainer.style.display = 'block';
-                })
-                .catch(err => {
-                    console.error('Erro ao carregar horários:', err);
-                    horariosDiv.innerHTML = '<p>Erro ao carregar horários.</p>';
-                    horariosContainer.style.display = 'block';
-                });
-        }
-    });
+        // 🔹 renderiza
+        setTimeout(() => {
+            calendar.render();
+            calendar.updateSize();
+        }, 200);
 
-    calendar.render();
+        // 🔹 responsividade: mantém SEMPRE em mês
+        window.addEventListener('resize', function () {
+            if (calendarEl.offsetParent !== null) {
+                calendar.changeView('dayGridMonth');
+                calendar.updateSize();
+            }
+        });
+    }
 });
 
-// Função chamada ao clicar em um botão de horário
+// Seleciona horário
 function setSelectedTime(button, dia) {
     let hora = button.getAttribute("data-time");
 
-    // Preenche os inputs hidden do formulário
     document.getElementById("selected-time").value = hora;
-
-    // 'dia' já vem no formato YYYY-MM-DD, não precisa formatar para DD/MM/YYYY
     document.getElementById("selected-date").value = dia;
 
-    // Marca visualmente o horário selecionado
     document.querySelectorAll(".botao-horario").forEach(btn => {
         btn.classList.remove("selecionado");
     });
     button.classList.add("selecionado");
 
-    // Mostra o botão de confirmar
     document.getElementById("btn-confirmar").style.display = "block";
 }
