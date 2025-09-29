@@ -59,7 +59,7 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 - **[RNF02]**: Garantir a segurança e privacidade das informações dos usuários.
 - **[RNF03]**: Alta disponibilidade do sistema (24/7), com manutenções programadas e rápidas.
 - **[RNF04]**: Suporte a múltiplos usuários simultaneamente.
-- **[RNF05]**: Interface amigável, intuitiva e com design atraente.
+- **[RNF05]**: Interface amigável, responsiva para todos os tamanhos de tela, intuitiva e com design atraente.
 - **[RNF06]**: Tempo de resposta inferior a 5 segundos.
 
 ---
@@ -89,4 +89,4 @@ Desenvolver uma ferramenta digital para que a população local e de regiões pr
 
 ## 🏁 Conclusão
 
-Como um **MVP Back-End**, este projeto representa um produto mínimo viável. Muitas funcionalidades podem ser incrementadas para transformar o sistema em uma solução completa para uso real. Com base na viabilidade e no interesse do público-alvo, espera-se refinar e expandir o projeto futuramente.
+Como este projeto é um **MVP**, produto mínimo viável, muitas funcionalidades podem ser incrementadas para transformar o sistema em uma solução completa para uso real. Com base na viabilidade e no interesse do público-alvo, espera-se refinar e expandir o projeto futuramente.
